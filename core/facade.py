@@ -54,11 +54,13 @@ def get_values():
     for lampada in lampadas:
         try:
             status = board.digital[lampada.pin].read()
-            print(status.read())
             item = {'name': lampada.name, 'pin': lampada.pin, 'status': status}
             lampadas_status.append(item)
-            print(item)
         except AttributeError:
+            print('não existe')
+            pass
+        except IndexError:
+            print('não existe')
             pass
 
     for rele in reles:
@@ -67,9 +69,13 @@ def get_values():
             item = {'name': rele.name, 'pin': rele.pin, 'status': status}
             reles_status.append(item)
         except AttributeError:
+            print('não existe')
+            pass
+        except IndexError:
+            print('não existe')
             pass
 
     print(lampadas_status)
     print(reles_status)
 
-    return [{'lampadas': lampadas_status, 'reles': reles_status}]
+    return {'lampadas': lampadas_status, 'reles': reles_status}

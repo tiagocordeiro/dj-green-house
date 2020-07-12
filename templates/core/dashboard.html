@@ -15,54 +15,37 @@
 <main role="main" class="container">
   <h1>Hello, world!</h1>
 
-  {{ status }}
-  {{ data }}
 
-  <form method="post" id="myform">
-    {% csrf_token %}
-
-    <input type="text" id="tempo" name="tempo">
-
-    </select>
-    </br></br></br>
-    <div class="row">
-      {% for lampada in lampadas %}
-        <div class="col">
-          <p>{{ lampada.name }} - {{ lampada.pin }}</p>
-          <a class='btn btn-primary' href="{% url 'liga' pin=lampada.pin %}">Liga</a>
-          <a class='btn btn-warning' href="{% url 'desliga' pin=lampada.pin %}">Desliga</a>
-        </div>
-      {% endfor %}
+  <div class="row">
+    <div class="col">
+      {{ data.lampadas }}
     </div>
-
     <div class="row">
-
-      {% for rele in reles %}
-        <div class="col">
-          <p>{{ rele.name }} - {{ rele.pin }}</p>
-          <a class='btn btn-primary' href="{% url 'liga' pin=rele.pin %}">Liga</a>
-          <a class='btn btn-primary' href="{% url 'desliga' pin=rele.pin %}">Liga</a>
-        </div>
-      {% endfor %}
-
+      {{ data.reles }}
     </div>
+  </div>
 
+  <div class="row">
+    {% for lampada in lampadas %}
+      <div class="col">
+        <p>{{ lampada.name }} - {{ lampada.pin }}</p>
+        <a class='btn btn-primary' href="{% url 'liga' pin=lampada.pin %}">Liga</a>
+        <a class='btn btn-warning' href="{% url 'desliga' pin=lampada.pin %}">Desliga</a>
+      </div>
+    {% endfor %}
+  </div>
 
-    <button name="action" class='btn btn-primary' value="{{ channel }}" type="submit">{{ channel }}</button>
-    <input id="toggle" name="toggle" type='submit' class='btn-primary btn' value='ON'>
-    <input id="toggle" name="toggle" type='submit' class='btn' value='OFF'>
-    </center>
-  </form>
+  <div class="row">
+    {% for rele in reles %}
+      <div class="col">
+        <p>{{ rele.name }} - {{ rele.pin }}</p>
+        <a class='btn btn-primary' href="{% url 'liga' pin=rele.pin %}">Liga</a>
+        <a class='btn btn-warning' href="{% url 'desliga' pin=rele.pin %}">Desliga</a>
+      </div>
+    {% endfor %}
+  </div>
 
 </main>
-
-<script type="text/javascript">
-    document.getElementById("myform").addEventListener('submit', functSubmit);
-
-    function functSubmit(event) {
-        console.log("Smart Irrigation System Started!");
-    }
-</script>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
