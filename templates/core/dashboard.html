@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header card-header-success">
+        <h4 class="card-title">django Green House</h4>
+        <p class="card-category">🌱🍂🍁</p>
+      </div>
+      <div class="card-body">
+        <div id="typography">
+          <div class="card-title">
+            <h2>Home</h2>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              {{ data.lampadas }}
+            </div>
+            <div class="row">
+              {{ data.reles }}
+            </div>
+          </div>
+
+        <div class="row">
+          <div class="col">
+            {{ data.sensores }}
+          </div>
+        </div>
+
+          <div class="row">
+            {% for lampada in lampadas %}
+              <div class="col">
+                <p>{{ lampada.name }} - {{ lampada.pin }}</p>
+                <a class='btn btn-primary' href="{% url 'liga' pin=lampada.pin %}">Liga</a>
+                <a class='btn btn-warning' href="{% url 'desliga' pin=lampada.pin %}">Desliga</a>
+              </div>
+            {% endfor %}
+          </div>
+
+          <div class="row">
+            {% for rele in reles %}
+              <div class="col">
+                <p>{{ rele.name }} - {{ rele.pin }}</p>
+                <a class='btn btn-primary' href="{% url 'liga' pin=rele.pin %}">Liga</a>
+                <a class='btn btn-warning' href="{% url 'desliga' pin=rele.pin %}">Desliga</a>
+              </div>
+            {% endfor %}
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
