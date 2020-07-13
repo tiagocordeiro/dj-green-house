@@ -7,6 +7,11 @@ from grow.models import Lampada, Relay
 
 board = pyfirmata.Arduino('/dev/cu.usbmodem14301')
 
+it = pyfirmata.util.Iterator(board)
+it.start()
+
+sensor_lm35 = board.get_pin('a:0:i')
+
 
 async def smart_irrigation(pin: int, tempo: int):
     board.digital[pin].write(0)
@@ -46,11 +51,12 @@ def get_values():
     lampadas = Lampada.objects.all()
     reles = Relay.objects.all()
 
-    it = pyfirmata.util.Iterator(board)
-    it.start()
-
     lampadas_status = []
     reles_status = []
+
+    temperatura = sensor_lm35.read()
+
+    # sensor_lm35 = board.analog[0].read()
     for lampada in lampadas:
         try:
             status = board.digital[lampada.pin].read()
@@ -77,5 +83,8 @@ def get_values():
 
     print(lampadas_status)
     print(reles_status)
+    print(temperatura * 0.48828125 * 1000)
 
-    return {'lampadas': lampadas_status, 'reles': reles_status}
+    return {'lampadas': lampadas_status,
+            'reles': reles_status,
+            'sensores': temperatura * 0.48828125 * 1000}
